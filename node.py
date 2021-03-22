@@ -1,6 +1,6 @@
 class Node:
 
-    def __init__(self, parent, shift, depth, state):
+    def __init__(self, parent, state):
         self.parent = parent
         self.state = state
 
