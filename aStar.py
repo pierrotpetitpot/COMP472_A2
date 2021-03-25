@@ -19,7 +19,9 @@ def aStar(root, goal):
         targetNode = copy.deepcopy(bestChild)
 
 
-# get the cost
+# Cost is based on the amount of effort it would take for a state to get to the goal state.
+# For example, if we were 1 swap away from the goal state, the cost would be 2 because two numbers are not
+# where they should be.
 def getCost(child, goal):
     totalCost = 0
     for i in range(9):
