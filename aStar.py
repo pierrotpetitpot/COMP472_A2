@@ -12,14 +12,15 @@ def aStar(root, goal):
         listOfChildren = getAllChildren(targetNode)
 
         for child in listOfChildren:
-            if hasBeenVisited(child, visitedChildrenState):
-                continue
             listOfCosts.append(getCost(child, goal))
 
         bestChild = getBestChild(listOfChildren, listOfCosts)
+        if bestChild is None:
+            return
         visitedChildrenState.append(bestChild.state)
-        print(bestChild.state + "\n")
+        print(bestChild.state)
         targetNode = copy.deepcopy(bestChild)
+        listOfCosts = []
 
 
 # Cost is based on the amount of effort it would take for a state to get to the goal state.
@@ -27,7 +28,7 @@ def aStar(root, goal):
 # where they should be.
 def getCost(child, goal):
     totalCost = 0
-    for i in range(9):
+    for i in range(1,9,1):
         targetIndex = child.state.index(i)
         goalIndex = goal.index(i)
         totalCost += (getHorizontalCost(targetIndex, goalIndex) + getVerticalCost(targetIndex, goalIndex))
@@ -60,13 +61,17 @@ def hasBeenVisited(child, visitedChildren):
 
 
 def getBestChild(children, listOfCosts):
-    indexLowestCost = listOfCosts.index(min(listOfCosts))
-    bestChild = children(indexLowestCost)
-    return bestChild
+    if  len(listOfCosts) > 0:
+        indexLowestCost = listOfCosts.index(min(listOfCosts))
+        bestChild = children[indexLowestCost]
+        return bestChild
+    else:
+        return
 
 
-goal = [2, 1, 3, 4, 5, 6, 7, 8, 9]
 
-aNode = Node(None, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+goal = [1,2,3,4,5,6,7,8,9]
+
+aNode = Node(None, [6,1,2,7,8,3,5,4,9])
 
 aStar(aNode, goal)
