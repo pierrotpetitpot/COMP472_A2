@@ -29,7 +29,7 @@ def getCost(child, goal):
     totalCost = 0
     for i in range(9):
         targetIndex = child.state.index(i)
-        goalIndex = goal.state.index(i)
+        goalIndex = goal.index(i)
         totalCost += (getHorizontalCost(targetIndex, goalIndex) + getVerticalCost(targetIndex, goalIndex))
     return totalCost
 
