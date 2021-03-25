@@ -18,19 +18,49 @@ def aStar(root, goal):
 
         bestChild = getBestChild(listOfChildren, listOfCosts)
         visitedChildrenState.append(bestChild.state)
+        print(bestChild.state)
+        targetNode = copy.deepcopy(bestChild)
+        listOfCosts = []
+
+
+def aStar2(root, goal):
+    listOfCosts = []
+    targetNode = copy.deepcopy(root)
+    visitedChildrenState = []
+
+    while goal != targetNode.state:
+        listOfChildren = getAllChildren(targetNode)
+
+        for child in listOfChildren:
+            if hasBeenVisited(child, visitedChildrenState):
+                continue
+            listOfCosts.append(getCost2(child, goal))
+
+        bestChild = getBestChild(listOfChildren, listOfCosts)
+        visitedChildrenState.append(bestChild.state)
         print(bestChild.state + "\n")
         targetNode = copy.deepcopy(bestChild)
-
+        listOfCosts = []
 
 # Cost is based on the amount of effort it would take for a state to get to the goal state.
 # For example, if we were 1 swap away from the goal state, the cost would be 2 because two numbers are not
 # where they should be.
 def getCost(child, goal):
     totalCost = 0
-    for i in range(9):
+    for i in range(1, 9, 1):
         targetIndex = child.state.index(i)
         goalIndex = goal.index(i)
         totalCost += (getHorizontalCost(targetIndex, goalIndex) + getVerticalCost(targetIndex, goalIndex))
+    return totalCost
+
+
+def getCost2(child, goal):
+    totalCost = 0
+    for i in range(1, 9, 1):
+        targetIndex = child.state.index(i)
+        goalIndex = goal.index(i)
+        totalCost += (getHorizontalCost(targetIndex, goalIndex) * getHorizontalCost(targetIndex, goalIndex) +
+                      getVerticalCost(targetIndex, goalIndex) * getVerticalCost(targetIndex, goalIndex))
     return totalCost
 
 
@@ -61,12 +91,12 @@ def hasBeenVisited(child, visitedChildren):
 
 def getBestChild(children, listOfCosts):
     indexLowestCost = listOfCosts.index(min(listOfCosts))
-    bestChild = children(indexLowestCost)
+    bestChild = children[indexLowestCost]
     return bestChild
 
 
-goal = [2, 1, 3, 4, 5, 6, 7, 8, 9]
-
-aNode = Node(None, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+aNode = Node(None, [1, 3, 4, 2, 5, 6, 7, 8, 9])
 
 aStar(aNode, goal)
+#aStar2(aNode, goal)
