@@ -6,15 +6,19 @@ import copy
 def aStar(root, goal):
     listOfCosts = []
     targetNode = copy.deepcopy(root)
+    visitedChildren = []
 
     while goal != targetNode.state:
         listOfChildren = getAllChildren(targetNode)
 
         for child in listOfChildren:
+            if hasBeenVisited(child, visitedChildren):
+                continue
             listOfCosts.append(getCost(child, goal))
 
         indexLowestCost = listOfCosts.index(min(listOfCosts))
         bestChild = listOfChildren(indexLowestCost)
+        visitedChildren.append(bestChild.state)
         print(bestChild.state + "\n")
         targetNode = copy.deepcopy(bestChild)
 
@@ -45,6 +49,15 @@ def getHorizontalCost(targetHorizontal, goalHorizontal):
     goalPosition = goalHorizontal % 3
     horizontalCost = abs(targetPosition - goalPosition)
     return horizontalCost
+
+
+# return if the child has already been visited
+def hasBeenVisited(child, visitedChildren):
+    visited = False
+    for visitedChild in visitedChildren:
+        if child == visitedChild:
+            visited = True
+    return visited
 
 
 goal = [2, 1, 3, 4, 5, 6, 7, 8, 9]
