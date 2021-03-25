@@ -55,7 +55,7 @@ def getHorizontalCost(targetHorizontal, goalHorizontal):
 def hasBeenVisited(child, visitedChildren):
     visited = False
     for visitedChild in visitedChildren:
-        if child == visitedChild:
+        if child.state == visitedChild:
             visited = True
     return visited
 
