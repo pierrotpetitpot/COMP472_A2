@@ -87,6 +87,7 @@ def hasBeenVisited(child, visitedChildren):
 
 
 def getBestChild(children, listOfCosts):
+
     if len(listOfCosts) > 0:
         indexLowestCost = listOfCosts.index(min(listOfCosts))
         bestChild = children[indexLowestCost]
@@ -95,8 +96,9 @@ def getBestChild(children, listOfCosts):
         return
 
 
-goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-aNode = Node(None, [9, 8, 7, 6, 5, 4, 3, 2, 1])
+goal = [1,2,3,4,5,6,7,8,9]
+aNode = Node(None, [9,8,7,6,5,4,3,2,1])
+
 
 aStar(aNode, goal)
 print("\n")
