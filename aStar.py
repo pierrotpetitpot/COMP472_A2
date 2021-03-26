@@ -12,11 +12,11 @@ def aStar(root, goal):
         listOfChildren = getAllChildren(targetNode)
 
         for child in listOfChildren:
-            if hasBeenVisited(child, visitedChildrenState):
-                continue
             listOfCosts.append(getCost(child, goal))
 
         bestChild = getBestChild(listOfChildren, listOfCosts)
+        if bestChild is None:
+            return
         visitedChildrenState.append(bestChild.state)
         print(bestChild.state)
         targetNode = copy.deepcopy(bestChild)
@@ -32,13 +32,10 @@ def aStar2(root, goal):
         listOfChildren = getAllChildren(targetNode)
 
         for child in listOfChildren:
-            if hasBeenVisited(child, visitedChildrenState):
-                continue
             listOfCosts.append(getCost2(child, goal))
-
         bestChild = getBestChild(listOfChildren, listOfCosts)
         visitedChildrenState.append(bestChild.state)
-        print(bestChild.state + "\n")
+        print(bestChild.state)
         targetNode = copy.deepcopy(bestChild)
         listOfCosts = []
 
@@ -90,13 +87,17 @@ def hasBeenVisited(child, visitedChildren):
 
 
 def getBestChild(children, listOfCosts):
-    indexLowestCost = listOfCosts.index(min(listOfCosts))
-    bestChild = children[indexLowestCost]
-    return bestChild
+    if len(listOfCosts) > 0:
+        indexLowestCost = listOfCosts.index(min(listOfCosts))
+        bestChild = children[indexLowestCost]
+        return bestChild
+    else:
+        return
 
 
 goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-aNode = Node(None, [1, 3, 4, 2, 5, 6, 7, 8, 9])
+aNode = Node(None, [9, 8, 7, 6, 5, 4, 3, 2, 1])
 
 aStar(aNode, goal)
-#aStar2(aNode, goal)
+print("\n")
+aStar2(aNode, goal)
