@@ -4,6 +4,7 @@ from datetime import datetime
 
 
 def aStar(root, goal):
+    listOfOutput = []
     listOfCosts = []
     targetNode = copy.deepcopy(root)
     visitedChildrenState = []
@@ -23,17 +24,19 @@ def aStar(root, goal):
 
         for child in listOfChildren:
             listOfCosts.append(getCost(child, goal))
-
         bestChild = getBestChild(listOfChildren, listOfCosts)
         if bestChild is None:
             return
         visitedChildrenState.append(bestChild.state)
-        print(bestChild.state)
+        listOfOutput.append(bestChild.state)
         targetNode = copy.deepcopy(bestChild)
         listOfCosts = []
+    aStarOutputSolution(listOfOutput)
+    aStarOutputPath(listOfOutput)
 
 
 def aStar2(root, goal):
+    listOfOutput = []
     listOfCosts = []
     targetNode = copy.deepcopy(root)
     visitedChildrenState = []
@@ -54,9 +57,72 @@ def aStar2(root, goal):
             listOfCosts.append(getCost2(child, goal))
         bestChild = getBestChild(listOfChildren, listOfCosts)
         visitedChildrenState.append(bestChild.state)
-        print(bestChild.state)
+        listOfOutput.append(bestChild.state)
         targetNode = copy.deepcopy(bestChild)
         listOfCosts = []
+    aStar2OutputSolution(listOfOutput)
+    aStar2OutputPath(listOfOutput)
+
+
+def aStarOutputSolution(path):
+    file = open("defaultHeuristicSolution.txt", "w")
+    for state in path:
+        currentState = state
+        file.write("\n==============")
+        file.write("\n\nState: ")
+        scounter = 0
+        for s in currentState:
+            if scounter % 3 == 0:
+                file.write("\n")
+            file.write(str(s) + " ")
+            scounter += 1
+    file.close()
+
+
+def aStarOutputPath(path):
+    file = open("defaultHeuristicPath.txt", "w")
+    for state in path:
+        currentState = state
+        file.write("\n==============")
+        file.write("\n\nState: ")
+        scounter = 0
+        for s in currentState:
+            if scounter % 3 == 0:
+                file.write("\n")
+            file.write(str(s) + " ")
+            scounter += 1
+    file.close()
+
+
+def aStar2OutputSolution(path):
+    file = open("EuclideanHeuristicSolution.txt", "w")
+    for state in path:
+        currentState = state
+        file.write("\n==============")
+        file.write("\n\nState: ")
+        scounter = 0
+        for s in currentState:
+            if scounter % 3 == 0:
+                file.write("\n")
+            file.write(str(s) + " ")
+            scounter += 1
+    file.close()
+
+
+def aStar2OutputPath(path):
+    file = open("EuclideanHeuristicPath.txt", "w")
+    for state in path:
+        currentState = state
+        file.write("\n==============")
+        file.write("\n\nState: ")
+        scounter = 0
+        for s in currentState:
+            if scounter % 3 == 0:
+                file.write("\n")
+            file.write(str(s) + " ")
+            scounter += 1
+    file.close()
+
 
 # Cost is based on the amount of effort it would take for a state to get to the goal state.
 # For example, if we were 1 swap away from the goal state, the cost would be 2 because two numbers are not
@@ -106,13 +172,13 @@ def hasBeenVisited(child, visitedChildren):
 
 
 def getBestChild(children, listOfCosts):
-
     if len(listOfCosts) > 0:
         indexLowestCost = listOfCosts.index(min(listOfCosts))
         bestChild = children[indexLowestCost]
         return bestChild
     else:
         return
+
 
 def getAllChildren(node: Node):
     currentNodeState = node.state
@@ -180,10 +246,12 @@ def getAllChildren(node: Node):
 
     return allChildren
 
-goal = [1,2,3,4,5,6,7,8,9]
-aNode = Node(None, [9,8,7,6,5,4,3,2,1])
+
+goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+aNode = Node(None, [9, 8, 7, 6, 5, 4, 3, 2, 1])
 
 
 aStar(aNode, goal)
-print("\n")
 aStar2(aNode, goal)
+
+
