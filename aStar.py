@@ -1,13 +1,24 @@
 from node import *
 import copy
+from datetime import datetime
 
 
 def aStar(root, goal):
     listOfCosts = []
     targetNode = copy.deepcopy(root)
     visitedChildrenState = []
+    startTime = datetime.now()
+    currentTime = datetime.now()
 
     while goal != targetNode.state:
+        currentTime = datetime.now()
+        delta = currentTime - startTime
+        if delta.total_seconds() >= 60:
+            # change the name of the file
+            f = open("iterativeDeepeningSol.txt", "w")
+            f.write("Time of execution greater than 60 seconds")
+            f.close
+            break
         listOfChildren = getAllChildren(targetNode)
 
         for child in listOfChildren:
@@ -26,8 +37,17 @@ def aStar2(root, goal):
     listOfCosts = []
     targetNode = copy.deepcopy(root)
     visitedChildrenState = []
-
+    startTime = datetime.now()
+    currentTime = datetime.now()
     while goal != targetNode.state:
+        currentTime = datetime.now()
+        delta = currentTime - startTime
+        if delta.total_seconds() >= 60:
+            # change the name of the file
+            f = open("iterativeDeepeningSol.txt", "w")
+            f.write("Time of execution greater than 60 seconds")
+            f.close
+            break
         listOfChildren = getAllChildren(targetNode)
 
         for child in listOfChildren:
