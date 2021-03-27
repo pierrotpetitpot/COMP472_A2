@@ -1,6 +1,16 @@
 from node import *
 import copy
 from datetime import datetime
+import random
+
+
+def randomGen():
+    f = open("20.txt", "w")
+    for x in range(20):
+        list = random.sample(range(1, 10), 9)
+        f.write(str(list))
+        f.write("\n")
+    f.close
 
 
 def aStar(root, goal):
@@ -256,8 +266,12 @@ def getAllChildren(node: Node):
 goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 aNode = Node(None, [9, 8, 7, 6, 5, 4, 3, 2, 1])
 
+randomGen()
+
+# my_file = open("20.txt", "r")
+# content_list = my_file.readlines()
+# aNode = Node(None, content_list)
+# aStar(aNode, goal)
 
 aStar(aNode, goal)
 aStar2(aNode, goal)
-
-

@@ -2,6 +2,7 @@ from node import Node
 import copy
 from datetime import datetime
 
+
 def getAllChildren(node: Node):
     currentNodeState = node.state
     tempChildState = copy.deepcopy(currentNodeState)
