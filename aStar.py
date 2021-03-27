@@ -1,4 +1,3 @@
-from main import *
 from node import *
 import copy
 
@@ -95,6 +94,71 @@ def getBestChild(children, listOfCosts):
     else:
         return
 
+def getAllChildren(node: Node):
+    currentNodeState = node.state
+    tempChildState = copy.deepcopy(currentNodeState)
+    allChildren = []
+    # child 0-1
+    tempChildState[0], tempChildState[1] = tempChildState[1], tempChildState[0]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 1-2
+    tempChildState[1], tempChildState[2] = tempChildState[2], tempChildState[1]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 0-3
+    tempChildState[0], tempChildState[3] = tempChildState[3], tempChildState[0]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 1-4
+    tempChildState[1], tempChildState[4] = tempChildState[4], tempChildState[1]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 2-5
+    tempChildState[2], tempChildState[5] = tempChildState[5], tempChildState[2]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 3-4
+    tempChildState[3], tempChildState[4] = tempChildState[4], tempChildState[3]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 4-5
+    tempChildState[4], tempChildState[5] = tempChildState[5], tempChildState[4]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 3-6
+    tempChildState[3], tempChildState[6] = tempChildState[6], tempChildState[3]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 4-7
+    tempChildState[4], tempChildState[7] = tempChildState[7], tempChildState[4]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 5-8
+    tempChildState[5], tempChildState[8] = tempChildState[8], tempChildState[5]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 6-7
+    tempChildState[6], tempChildState[7] = tempChildState[7], tempChildState[6]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+    tempChildState = copy.deepcopy(currentNodeState)
+    # child 7-8
+    tempChildState[7], tempChildState[8] = tempChildState[8], tempChildState[7]
+    newChild = Node(currentNodeState, tempChildState)
+    allChildren.append(newChild)
+
+    return allChildren
 
 goal = [1,2,3,4,5,6,7,8,9]
 aNode = Node(None, [9,8,7,6,5,4,3,2,1])
