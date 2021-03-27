@@ -16,7 +16,10 @@ def aStar(root, goal):
         delta = currentTime - startTime
         if delta.total_seconds() >= 60:
             # change the name of the file
-            f = open("iterativeDeepeningSol.txt", "w")
+            f = open("defaultHeuristicSolution.txt", "w")
+            f.write("Time of execution greater than 60 seconds")
+            f.close
+            f = open("defaultHeuristicPath.txt", "w")
             f.write("Time of execution greater than 60 seconds")
             f.close
             break
@@ -47,7 +50,10 @@ def aStar2(root, goal):
         delta = currentTime - startTime
         if delta.total_seconds() >= 60:
             # change the name of the file
-            f = open("iterativeDeepeningSol.txt", "w")
+            f = open("EuclideanHeuristicSolution.txt", "w")
+            f.write("Time of execution greater than 60 seconds")
+            f.close
+            f = open("EuclideanHeuristicPath.txt", "w")
             f.write("Time of execution greater than 60 seconds")
             f.close
             break
