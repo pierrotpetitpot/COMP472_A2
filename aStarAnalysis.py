@@ -180,7 +180,6 @@ def aStarAnalysis1(inputs, goalState):
         f.close
         aStarPrime(input, goalState)
     outputAverageCost("aStarPuzzleCost_h1.txt", "averagePuzzleCost_h1.txt")
-    outputAverageCost("aStarPuzzleCost_h2.txt", "averagePuzzleCost_h2.txt")
 
 
 def aStarAnalysis2(inputs, goalState):
@@ -189,6 +188,8 @@ def aStarAnalysis2(inputs, goalState):
         f.write("\n===========NEW PUZZLE===========\n")
         f.close
         aStarPrime2(input, goalState)
+
+    outputAverageCost("aStarPuzzleCost_h2.txt", "averagePuzzleCost_h2.txt")
 
 
 def getAllChildren(node: Node):
