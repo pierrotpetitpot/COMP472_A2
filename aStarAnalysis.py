@@ -14,7 +14,6 @@ import os
 import time
 
 
-
 def randomGen():
     f = open("20.txt", "w")
     for x in range(20):
@@ -33,6 +32,7 @@ def aStarPrime(root, goal):
     startTime = datetime.now()
     currentTime = datetime.now()
     totalLength = 0
+    puzzleCost = 0
 
     while goal != targetNode.state:
         currentTime = datetime.now()
@@ -56,10 +56,13 @@ def aStarPrime(root, goal):
         targetNode = copy.deepcopy(bestChild)
         outputToFile(listOfOutput, "analysisAStar_h1_p0.txt")
         # outputToFileLength(path, "analysisAStar_h1(2).txt")
+
+        puzzleCost += min(listOfCosts)
         listOfCosts = []
 
     length = len(listOfOutput)
     outputToFileLengthHolder(length, "aStarlengthHolder_h1.txt")
+    outputSinglePuzzleCost(puzzleCost, "aStarPuzzleCost_h1.txt")
 
     with open("aStarlengthHolder_h1.txt") as fh:
         lengthTotal = sum(map(int, fh.readlines()))
@@ -82,6 +85,8 @@ def aStarPrime2(root, goal):
     startTime = datetime.now()
     currentTime = datetime.now()
     totalLength = 0
+    puzzleCost = 0
+
 
     while goal != targetNode.state:
         currentTime = datetime.now()
@@ -105,10 +110,13 @@ def aStarPrime2(root, goal):
         targetNode = copy.deepcopy(bestChild)
         outputToFile(listOfOutput, "analysisAStar_h2_p0.txt")
         # outputToFileLength(path, "analysisAStar_h1(2).txt")
+        puzzleCost += min(listOfCosts)
         listOfCosts = []
 
     length = len(listOfOutput)
     outputToFileLengthHolder(length, "aStarlengthHolder_h2.txt")
+    outputSinglePuzzleCost(puzzleCost, "aStarPuzzleCost_h2.txt")
+
 
     with open("aStarlengthHolder_h2.txt") as fh:
         lengthTotal = sum(map(int, fh.readlines()))
@@ -171,6 +179,8 @@ def aStarAnalysis1(inputs, goalState):
         f.write("\n===========NEW PUZZLE===========\n")
         f.close
         aStarPrime(input, goalState)
+    outputAverageCost("aStarPuzzleCost_h1.txt", "averagePuzzleCost_h1.txt")
+    outputAverageCost("aStarPuzzleCost_h2.txt", "averagePuzzleCost_h2.txt")
 
 
 def aStarAnalysis2(inputs, goalState):
@@ -263,6 +273,25 @@ def getAllChildren(node: Node):
     return allChildren
 
 
+def outputSinglePuzzleCost(puzzleCost, fileName):
+    f = open(fileName, "a")
+    f.write(str(puzzleCost))
+    f.write(str("\n"))
+    f.close
+
+
+def outputAverageCost(fileNameRead,fileNameWrite):
+    with open(fileNameRead) as fh:
+        totalcost = sum(map(int, fh.readlines()))
+        averageCost = totalcost / 20
+    f = open(fileNameWrite, "w")
+    f.write("The total cost for all puzzle is: ")
+    f.write(str(totalcost))
+    f.write("\n")
+    f.write("The average cost for a puzzle is: ")
+    f.write(str(averageCost))
+    f.write(str("\n"))
+
 randomGen()
 
 # test = [8, 4, 7, 1, 5, 6, 9, 3, 2]
@@ -276,14 +305,14 @@ print("\n")
 start_timeh2 = time.time()
 aStarAnalysis1(listOfInputs, goal)
 print("Total Time h1:", time.time() - start_timeh2, "seconds")
-print("Average Time h1:", (time.time() - start_timeh2)/20, "seconds")
+print("Average Time h1:", (time.time() - start_timeh2) / 20, "seconds")
 
 print("\n")
 
 start_timeh2 = time.time()
 aStarAnalysis2(listOfInputs, goal)
 print("Total Time h2:", time.time() - start_timeh2, "seconds")
-print("Average Time h2:", (time.time() - start_timeh2)/20, "seconds")
+print("Average Time h2:", (time.time() - start_timeh2) / 20, "seconds")
 
 os.remove("aStarlengthHolder_h1.txt")
 os.remove("aStarlengthHolder_h2.txt")
