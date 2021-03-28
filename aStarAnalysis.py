@@ -73,7 +73,7 @@ def aStarPrime(root, goal):
     f.write(str("\n"))
 
 
-# outputs average and total for h1
+# outputs average and total for h2
 def aStarPrime2(root, goal):
     listOfOutput = []
     listOfCosts = []
@@ -179,21 +179,6 @@ def aStarAnalysis2(inputs, goalState):
         f.write("\n===========NEW PUZZLE===========\n")
         f.close
         aStarPrime2(input, goalState)
-
-
-# def aStarAnalysis2(inputs, goalState):
-#     for input in inputs:
-#         f = open("analysisAStar(2).txt", "a")
-#         f.write("\n===========NEW PUZZLE===========\n")
-#         f.close
-#         aStarPrime(input, goalState)
-# def aStarAnalysis3(inputs, goalState):
-#     for input in inputs:
-#         f = open("analysisAStar(3).txt", "a")
-#         f.write("\n===========NEW PUZZLE===========\n")
-#         f.close
-#         aStarPrime(input, goalState)
-#
 
 
 def getAllChildren(node: Node):
