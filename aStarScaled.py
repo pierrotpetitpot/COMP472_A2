@@ -139,7 +139,7 @@ def aStarScaled(root, goal):
 
         bestChild = getBestChild(listOfChildren, listOfCosts)
 
-        print(bestChild)
+        # print(bestChild)
 
         solutionLength = solutionLength + 1
         cost += min(listOfCosts)
@@ -214,6 +214,37 @@ def aStarScaledAnalysis(puzzles):
 
     totalTime = getTotalTime(results)
     averageTime = totalTime / len(results)
+
+    f = open("statistics.txt", "w")
+    f.write("Total length: "+str(totalLength))
+    f.write("\n")
+
+    f.write("Average length: "+str(averageLength))
+    f.write("\n")
+
+    f.write("Total noSolution: "+str(totalNoSolution))
+    f.write("\n")
+
+    f.write("Average noSolution: "+str(averageNoSolution))
+    f.write("\n")
+
+    f.write("Total cost: "+str(totalCost))
+    f.write("\n")
+
+    f.write("Average cost: "+str(averageCost))
+    f.write("\n")
+
+    f.write("Total time: "+str(totalTime))
+    f.write("\n")
+
+    f.write("Average time: "+str(averageTime))
+    f.write("\n")
+    f.close
+
+
+
+
+
 
 
 # goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
