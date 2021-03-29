@@ -243,8 +243,8 @@ def aStarScaledAnalysis(puzzles):
 goal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 state = [2, 1, 3, 4, 5, 7, 6, 8, 9, 11, 10, 12, 13, 14, 16, 15]
 
-# result = aStarScaled(state, goal)
-# pprint(result.listOfPaths)
+result = aStarScaled(state, goal)
+pprint(result.listOfPaths)
 
-genericRandomGen(5, 3)
-aStarScaledAnalysis(getInput("scale.txt"))
+# genericRandomGen(5, 3)
+# aStarScaledAnalysis(getInput("scale.txt"))
