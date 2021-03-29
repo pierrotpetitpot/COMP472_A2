@@ -7,11 +7,12 @@ from aStar import getBestChild
 from aStar import aStar2
 from statistics import *
 from pprint import pprint
+import csv
 
 
 # creates a file with costumed dimension puzzles
 def genericRandomGen(numberOfPuzzles, dimensions):
-    f = open("20.txt", "w")
+    f = open("scale.txt", "w")
     size = dimensions * dimensions
 
     for x in range(numberOfPuzzles):
@@ -30,8 +31,7 @@ def getInput(filename):
             row = str(row)
             formattedRow = row.replace("[", "").replace("]", "").replace("'", "")
             puzzle = [int(x) for x in formattedRow.split(',')]
-            aNode = Node(None, puzzle)
-            inputs.append(aNode)
+            inputs.append(puzzle)
 
     return inputs
 
@@ -130,6 +130,7 @@ def aStarScaled(root, goal):
         delta = currentTime - startTime
         if delta.total_seconds() >= 2:
             noSolution = True
+            break
 
         listOfChildren = getTotalChildrenScaled(targetNode)
 
@@ -154,10 +155,74 @@ def aStarScaled(root, goal):
     return statistics
 
 
+def getResults(puzzles):
+    listOfStatistics = []
+    for puzzle in puzzles:
+        goal = list(range(len(puzzle)))
+        result = aStarScaled(puzzle, goal)
+        listOfStatistics.append(result)
+
+    return listOfStatistics
+
+
+def getTotalLength(results):
+    total = 0
+    for result in results:
+        total += result.length
+    return total
+
+
+def getTotalNoSolution(results):
+    noSolutionCount = 0
+    for result in results:
+        if result.noSolution:
+            noSolutionCount = noSolutionCount + 1
+
+    return noSolutionCount
+
+
+def getTotalCost(results):
+    totalCost = 0
+    for result in results:
+        totalCost += result.cost
+
+    return totalCost
+
+
+def getTotalTime(results):
+    listOfTimes = []
+
+    for result in results:
+        listOfTimes.append(result.executionTime)
+
+    totalTime = sum([d.seconds for d in listOfTimes])
+
+    return totalTime
+
+
+def aStarScaledAnalysis(puzzles):
+    results = getResults(puzzles)
+
+    totalLength = getTotalLength(results)
+    averageLength = totalLength / len(puzzles)
+
+    totalNoSolution = getTotalNoSolution(results)
+    averageNoSolution = totalNoSolution / len(puzzles)
+
+    totalCost = getTotalCost(results)
+    averageCost = totalCost / len(results)
+
+    totalTime = getTotalTime(results)
+    averageTime = totalTime / len(results)
+
+
 # goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 # state = [2, 3, 1, 5, 6, 4, 7, 9, 8]
 
 goal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 state = [2, 1, 3, 4, 5, 7, 6, 8, 9, 11, 10, 12, 13, 14, 16, 15]
 
-pprint(aStarScaled(state, goal))
+# pprint(aStarScaled(state, goal))
+
+genericRandomGen(5, 3)
+aStarScaledAnalysis(getInput("scale.txt"))
