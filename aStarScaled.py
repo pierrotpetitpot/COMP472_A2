@@ -167,79 +167,67 @@ def getResults(puzzles):
     return listOfStatistics
 
 
-def getTotalLength(results):
-    total = 0
-    for result in results:
-        total += result.length
-    return total
-
-
-def getTotalNoSolution(results):
+def getStatistics(results):
+    totalLength = 0
     noSolutionCount = 0
-    for result in results:
-        if result.noSolution:
-            noSolutionCount = noSolutionCount + 1
-
-    return noSolutionCount
-
-
-def getTotalCost(results):
     totalCost = 0
-    for result in results:
-        totalCost += result.cost
-
-    return totalCost
-
-
-def getTotalTime(results):
     listOfTimes = []
 
     for result in results:
+
+        totalLength += result.length
+
+        if result.noSolution:
+            noSolutionCount = noSolutionCount + 1
+
+        totalCost += result.cost
+
         listOfTimes.append(result.executionTime)
 
     totalTime = sum([d.seconds for d in listOfTimes])
 
-    return totalTime
+    statisticsDictionary = {
+        "totalLength": totalLength,
+        "averageLength": totalLength/len(results),
+        "totalNoSolution": noSolutionCount,
+        "averageNoSolution": noSolutionCount/len(results),
+        "totalCost": totalCost,
+        "averageCost": totalCost/len(results),
+        "totalTime": totalTime,
+        "averageTime": totalTime/len(results)
+    }
+
+    return statisticsDictionary
 
 
 def aStarScaledAnalysis(puzzles):
     results = getResults(puzzles)
 
-    totalLength = getTotalLength(results)
-    averageLength = totalLength / len(puzzles)
-
-    totalNoSolution = getTotalNoSolution(results)
-    averageNoSolution = totalNoSolution / len(puzzles)
-
-    totalCost = getTotalCost(results)
-    averageCost = totalCost / len(results)
-
-    totalTime = getTotalTime(results)
-    averageTime = totalTime / len(results)
+    dictionary = getStatistics(results)
 
     f = open("statistics.txt", "w")
-    f.write("Total length: "+str(totalLength))
+    f.write("Total length: "+str(dictionary["totalLength"]))
     f.write("\n")
 
-    f.write("Average length: "+str(averageLength))
+    f.write("Average length: "+str(dictionary["averageLength"]))
     f.write("\n")
 
-    f.write("Total noSolution: "+str(totalNoSolution))
+    f.write("Total noSolution: "+str(dictionary["totalNoSolution"]))
     f.write("\n")
 
-    f.write("Average noSolution: "+str(averageNoSolution))
+    f.write("Average noSolution: "+str(dictionary["averageNoSolution"]))
     f.write("\n")
 
-    f.write("Total cost: "+str(totalCost))
+    f.write("Total cost: "+str(dictionary["totalCost"]))
     f.write("\n")
 
-    f.write("Average cost: "+str(averageCost))
+    f.write("Average cost: "+str(dictionary["averageCost"]))
     f.write("\n")
 
-    f.write("Total time: "+str(totalTime))
+    f.write("Total time: "+str(dictionary["totalTime"]))
     f.write("\n")
 
-    f.write("Average time: "+str(averageTime))
+    f.write("Average time: "+str(dictionary["averageTime"]))
     f.write("\n")
     f.close
 
@@ -255,8 +243,8 @@ def aStarScaledAnalysis(puzzles):
 goal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 state = [2, 1, 3, 4, 5, 7, 6, 8, 9, 11, 10, 12, 13, 14, 16, 15]
 
-result = aStarScaled(state, goal)
-pprint(result.listOfPaths)
+# result = aStarScaled(state, goal)
+# pprint(result.listOfPaths)
 
-# genericRandomGen(5, 3)
-# aStarScaledAnalysis(getInput("scale.txt"))
+genericRandomGen(5, 3)
+aStarScaledAnalysis(getInput("scale.txt"))
