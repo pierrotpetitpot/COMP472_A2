@@ -1,14 +1,13 @@
 import random
-from node import *
 import copy
 from datetime import datetime
 import math
 from aStar import getBestChild
-from aStar import aStar2
 from statistics import *
-from pprint import pprint
 import csv
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+
+
 
 
 # creates a file with costumed dimension puzzles
@@ -207,12 +206,8 @@ def getStatistics(results):
     return statisticsDictionary
 
 
-def aStarScaledAnalysis(puzzles):
-    results = getResults(puzzles)
-
-    dictionary = getStatistics(results)
-
-    f = open("statistics.txt", "a")
+def outputStats(filename, dictionary):
+    f = open(filename, "a")
     f.write("Total length: " + str(dictionary["totalLength"]))
     f.write("\n")
 
@@ -243,6 +238,12 @@ def aStarScaledAnalysis(puzzles):
 
     f.close
 
+
+def aStarScaledAnalysis(puzzles):
+    results = getResults(puzzles)
+    dictionary = getStatistics(results)
+    outputStats("statistics.txt", dictionary)
+
     return dictionary
 
 
@@ -267,15 +268,19 @@ def graphPlotting(numberOfPuzzles, startDimensions, endDimensions):
         averageTime.append(dictionary["averageTime"])
         averageNoSolution.append(dictionary["averageNoSolution"])
 
+    plt.plot(xAxis, averageCosts, label="Average cost")
+    plt.plot(xAxis, averageLength, label="Average length")
+    plt.plot(xAxis, averageTime, label="Average time")
+    plt.plot(xAxis, averageNoSolution, label="Average no solution")
+    plt.xticks(range(startDimensions, endDimensions + 1))
+    plt.xlabel('dimensions of puzzles')
+    plt.ylabel('Measurements')
+    plt.title('Stats')
+    plt.legend()
+    plt.show()
 
 
 
-goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-state2 = [9, 8, 7, 6, 5, 4, 3, 2, 1]
 
-# result = aStarScaled(state2, goal)
-# pprint(result.listOfPaths)
-
-# genericRandomGen(100, 4)
-# aStarScaledAnalysis(getInput("scale.txt"))
-graphPlotting(10,3,5)
+# number of puzzles, start dimensions, end dimensions
+graphPlotting(10, 2, 6)
