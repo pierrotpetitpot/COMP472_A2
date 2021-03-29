@@ -124,6 +124,7 @@ def aStarScaled(root, goal):
     noSolution = False
     cost = 0
     executionTime = 0
+    listOfPaths = []
 
     while goal != targetNode:
         currentTime = datetime.now()
@@ -143,6 +144,7 @@ def aStarScaled(root, goal):
 
         solutionLength = solutionLength + 1
         cost += min(listOfCosts)
+        listOfPaths.append(bestChild)
 
         targetNode = copy.deepcopy(bestChild)
         listOfCosts = []
@@ -150,7 +152,7 @@ def aStarScaled(root, goal):
     endTime = datetime.now()
     executionTime = endTime - startTime
 
-    statistics = Statistics(solutionLength, noSolution, cost, executionTime)
+    statistics = Statistics(solutionLength, noSolution, cost, executionTime, listOfPaths)
 
     return statistics
 
@@ -253,7 +255,8 @@ def aStarScaledAnalysis(puzzles):
 goal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 state = [2, 1, 3, 4, 5, 7, 6, 8, 9, 11, 10, 12, 13, 14, 16, 15]
 
-# pprint(aStarScaled(state, goal))
+result = aStarScaled(state, goal)
+pprint(result.listOfPaths)
 
-genericRandomGen(5, 3)
-aStarScaledAnalysis(getInput("scale.txt"))
+# genericRandomGen(5, 3)
+# aStarScaledAnalysis(getInput("scale.txt"))
