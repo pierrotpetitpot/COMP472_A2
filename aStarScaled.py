@@ -8,6 +8,7 @@ from aStar import aStar2
 from statistics import *
 from pprint import pprint
 import csv
+# import matplotlib.pyplot as plt
 
 
 # creates a file with costumed dimension puzzles
@@ -166,7 +167,7 @@ def aStarScaled(root, goal):
 def getResults(puzzles):
     listOfStatistics = []
     for puzzle in puzzles:
-        goal = list(range(1, len(puzzle)+1))
+        goal = list(range(1, len(puzzle) + 1))
         result = aStarScaled(puzzle, goal)
         listOfStatistics.append(result)
 
@@ -211,7 +212,7 @@ def aStarScaledAnalysis(puzzles):
 
     dictionary = getStatistics(results)
 
-    f = open("statistics.txt", "w")
+    f = open("statistics.txt", "a")
     f.write("Total length: " + str(dictionary["totalLength"]))
     f.write("\n")
 
@@ -235,7 +236,38 @@ def aStarScaledAnalysis(puzzles):
 
     f.write("Average time(in microseconds): " + str(dictionary["averageTime"]))
     f.write("\n")
+
+    f.write("\n")
+    f.write("\n")
+    f.write("\n")
+
     f.close
+
+    return dictionary
+
+
+def graphPlotting(numberOfPuzzles, startDimensions, endDimensions):
+    listOfDictionaries = []
+    for i in range(startDimensions, endDimensions + 1):
+        genericRandomGen(numberOfPuzzles, i)
+        statistics = aStarScaledAnalysis(getInput("scale.txt"))
+        listOfDictionaries.append(statistics)
+
+    xAxis = list(range(startDimensions, endDimensions + 1, 1))
+
+    # yAxis
+    averageCosts = []
+    averageLength = []
+    averageTime = []
+    averageNoSolution = []
+
+    for dictionary in listOfDictionaries:
+        averageCosts.append(dictionary["averageCost"])
+        averageLength.append(dictionary["averageLength"])
+        averageTime.append(dictionary["averageTime"])
+        averageNoSolution.append(dictionary["averageNoSolution"])
+
+
 
 
 goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -244,5 +276,6 @@ state2 = [9, 8, 7, 6, 5, 4, 3, 2, 1]
 # result = aStarScaled(state2, goal)
 # pprint(result.listOfPaths)
 
-genericRandomGen(20, 4)
-aStarScaledAnalysis(getInput("scale.txt"))
+# genericRandomGen(100, 4)
+# aStarScaledAnalysis(getInput("scale.txt"))
+graphPlotting(10,3,5)
