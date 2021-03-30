@@ -6,20 +6,26 @@ from aStar import getBestChild
 from statistics import *
 import csv
 import matplotlib.pyplot as plt
-
-
+import os
 
 
 # creates a file with costumed dimension puzzles
 def genericRandomGen(numberOfPuzzles, dimensions):
-    f = open("scale.txt", "w")
+    f1 = open("scaledPuzzlesToDelete.txt", "w")
+    f2 = open("scaledPuzzles.txt", "a")
+
     size = dimensions * dimensions
 
     for x in range(numberOfPuzzles):
         list = random.sample(range(1, size + 1), size)
-        f.write(str(list))
-        f.write("\n")
-    f.close
+        f1.write(str(list))
+        f1.write("\n")
+
+        f2.write(str(list))
+        f2.write("\n")
+
+    f1.close
+    f2.close
 
 
 # returns a list of nodes where each node is a puzzle from 20.txt
@@ -239,10 +245,21 @@ def outputStats(filename, dictionary):
     f.close
 
 
+def outputSolutionPaths(results):
+    f1 = open("solutionPathsForScaled.txt", "w")
+
+    for result in results:
+        for state in result.listOfPaths:
+            f1.write(str(list(state)))
+    f1.write("\n")
+
+    f1.close
+
+
 def aStarScaledAnalysis(puzzles):
     results = getResults(puzzles)
     dictionary = getStatistics(results)
-    outputStats("statistics.txt", dictionary)
+    outputStats("aStarScaledStatistics.txt", dictionary)
 
     return dictionary
 
@@ -251,7 +268,7 @@ def graphPlotting(numberOfPuzzles, startDimensions, endDimensions):
     listOfDictionaries = []
     for i in range(startDimensions, endDimensions + 1):
         genericRandomGen(numberOfPuzzles, i)
-        statistics = aStarScaledAnalysis(getInput("scale.txt"))
+        statistics = aStarScaledAnalysis(getInput("scaledPuzzlesToDelete.txt"))
         listOfDictionaries.append(statistics)
 
     xAxis = list(range(startDimensions, endDimensions + 1, 1))
@@ -269,8 +286,29 @@ def graphPlotting(numberOfPuzzles, startDimensions, endDimensions):
         averageNoSolution.append(dictionary["averageNoSolution"])
 
     plt.plot(xAxis, averageCosts, label="Average cost")
+    plt.xticks(range(startDimensions, endDimensions + 1))
+    plt.xlabel('dimensions of puzzles')
+    plt.ylabel('Measurements')
+    plt.title('Stats')
+    plt.legend()
+    plt.show()
+
     plt.plot(xAxis, averageLength, label="Average length")
+    plt.xticks(range(startDimensions, endDimensions + 1))
+    plt.xlabel('dimensions of puzzles')
+    plt.ylabel('Measurements')
+    plt.title('Stats')
+    plt.legend()
+    plt.show()
+
     plt.plot(xAxis, averageTime, label="Average time")
+    plt.xticks(range(startDimensions, endDimensions + 1))
+    plt.xlabel('dimensions of puzzles')
+    plt.ylabel('Measurements')
+    plt.title('Stats')
+    plt.legend()
+    plt.show()
+
     plt.plot(xAxis, averageNoSolution, label="Average no solution")
     plt.xticks(range(startDimensions, endDimensions + 1))
     plt.xlabel('dimensions of puzzles')
@@ -279,7 +317,8 @@ def graphPlotting(numberOfPuzzles, startDimensions, endDimensions):
     plt.legend()
     plt.show()
 
-
+    if os.path.exists("scaledPuzzlesToDelete.txt"):
+        os.remove("scaledPuzzlesToDelete.txt")
 
 
 # number of puzzles, start dimensions, end dimensions
