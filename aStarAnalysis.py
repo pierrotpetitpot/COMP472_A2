@@ -38,7 +38,7 @@ def aStarPrime(root, goal):
         currentTime = datetime.now()
         delta = currentTime - startTime
 
-        if delta.total_seconds() >= 2:
+        if delta.total_seconds() >= 60:
             # change the name of the file
             f = open("analysisAStar_h1_p0.txt", "a")
             f.write("Time of execution greater than 60 seconds" "\n")
@@ -92,7 +92,7 @@ def aStarPrime2(root, goal):
         currentTime = datetime.now()
         delta = currentTime - startTime
 
-        if delta.total_seconds() >= 2:
+        if delta.total_seconds() >= 60:
             # change the name of the file
             f = open("analysisAStar_h2_p0.txt", "a")
             f.write("Time of execution greater than 60 seconds" "\n")

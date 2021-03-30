@@ -141,7 +141,7 @@ def aStarScaled(root, goal):
     while goal != targetNode:
         currentTime = datetime.now()
         delta = currentTime - startTime
-        if delta.total_seconds() >= 2:
+        if delta.total_seconds() >= 60:
             noSolution = True
             break
 
