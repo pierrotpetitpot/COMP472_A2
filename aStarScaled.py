@@ -126,6 +126,7 @@ def getHorizontalCostScaled(targetHorizontal, goalHorizontal, dimensions):
     return horizontalCost
 
 
+# generic aStar
 def aStarScaled(root, goal):
     targetNode = copy.deepcopy(root)
     listOfCosts = []
@@ -141,7 +142,7 @@ def aStarScaled(root, goal):
     while goal != targetNode:
         currentTime = datetime.now()
         delta = currentTime - startTime
-        if delta.total_seconds() >= 2:
+        if delta.total_seconds() >= 60:
             noSolution = True
             break
 
@@ -169,6 +170,7 @@ def aStarScaled(root, goal):
     return statistics
 
 
+# aStar is applied for all puzzles of fixed n x n dimensions
 def getResults(puzzles):
     listOfStatistics = []
     for puzzle in puzzles:
@@ -179,6 +181,7 @@ def getResults(puzzles):
     return listOfStatistics
 
 
+# get stats for the puzzles solved in n x n dimensions
 def getStatistics(results):
     totalLength = 0
     noSolutionCount = 0
@@ -212,6 +215,7 @@ def getStatistics(results):
     return statisticsDictionary
 
 
+# output stats in a file
 def outputStats(filename, dictionary):
     f = open(filename, "a")
     f.write("Total length: " + str(dictionary["totalLength"]))
@@ -245,6 +249,7 @@ def outputStats(filename, dictionary):
     f.close
 
 
+# outputs solutions paths for each puzzles of n by n size
 def outputSolutionPaths(results):
     f1 = open("solutionPathsForScaled.txt", "w")
 
@@ -256,6 +261,7 @@ def outputSolutionPaths(results):
     f1.close
 
 
+# apply aStar for puzzles of n by n, get stats and output them in a file
 def aStarScaledAnalysis(puzzles):
     results = getResults(puzzles)
     dictionary = getStatistics(results)
@@ -264,6 +270,24 @@ def aStarScaledAnalysis(puzzles):
     return dictionary
 
 
+# plots a single graph for a specific stat
+def singleGraph(xAxis, yAxis, xLabel, yLabel, title):
+    plt.plot(xAxis, yAxis)
+    plt.xticks(range(xAxis[0], len(xAxis) + (1 + xAxis[0])))
+    plt.xlabel(xLabel)
+    plt.ylabel(yLabel)
+    plt.title(title)
+    plt.show()
+
+
+def deleteFileSafely(filename):
+    if os.path.exists(filename):
+        os.remove(filename)
+
+
+# graphs multiple plots where x axis is the puzzles dimensions, and y axis are the stats.
+# this function generates X number of puzzles of various sizes between start and end dimensions, applies aStar for all the puzzles
+# and generates the data to be plotted in the graph
 def graphPlotting(numberOfPuzzles, startDimensions, endDimensions):
     listOfDictionaries = []
     for i in range(startDimensions, endDimensions + 1):
@@ -285,41 +309,11 @@ def graphPlotting(numberOfPuzzles, startDimensions, endDimensions):
         averageTime.append(dictionary["averageTime"])
         averageNoSolution.append(dictionary["averageNoSolution"])
 
-    plt.plot(xAxis, averageCosts, label="Average cost")
-    plt.xticks(range(startDimensions, endDimensions + 1))
-    plt.xlabel('dimensions of puzzles')
-    plt.ylabel('Measurements')
-    plt.title('Stats')
-    plt.legend()
-    plt.show()
-
-    plt.plot(xAxis, averageLength, label="Average length")
-    plt.xticks(range(startDimensions, endDimensions + 1))
-    plt.xlabel('dimensions of puzzles')
-    plt.ylabel('Measurements')
-    plt.title('Stats')
-    plt.legend()
-    plt.show()
-
-    plt.plot(xAxis, averageTime, label="Average time")
-    plt.xticks(range(startDimensions, endDimensions + 1))
-    plt.xlabel('dimensions of puzzles')
-    plt.ylabel('Measurements')
-    plt.title('Stats')
-    plt.legend()
-    plt.show()
-
-    plt.plot(xAxis, averageNoSolution, label="Average no solution")
-    plt.xticks(range(startDimensions, endDimensions + 1))
-    plt.xlabel('dimensions of puzzles')
-    plt.ylabel('Measurements')
-    plt.title('Stats')
-    plt.legend()
-    plt.show()
-
-    if os.path.exists("scaledPuzzlesToDelete.txt"):
-        os.remove("scaledPuzzlesToDelete.txt")
+    singleGraph(xAxis, averageTime, "dimensions", "Time in micro seconds", "stats")
+    singleGraph(xAxis, averageLength, "dimensions", "Average length", "stats")
+    singleGraph(xAxis, averageCosts, "dimensions", "Average cost", "stats")
+    singleGraph(xAxis, averageNoSolution, "dimensions", "Average no solution", "stats")
 
 
-# number of puzzles, start dimensions, end dimensions
 graphPlotting(10, 2, 6)
+deleteFileSafely("scaledPuzzlesToDelete.txt")
