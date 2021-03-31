@@ -1,4 +1,5 @@
 class NodeDepth:
+    # Class used for the iterative deepening with added attribute depth
 
     def __init__(self, parent, state, depth):
         self.parent = parent

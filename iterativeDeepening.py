@@ -2,7 +2,7 @@ from nodeDepth import NodeDepth
 import copy
 from datetime import datetime
 
-
+#method to get all the 12 possible children of a node
 def getAllChildren(node: NodeDepth):
     currentNodeState = node.state
     tempChildState = copy.deepcopy(currentNodeState)
@@ -70,6 +70,8 @@ def getAllChildren(node: NodeDepth):
 
     return allChildren
 
+# when the 12 children of a node is created by the method getAllChildren,
+# we verify if the children state has already been visited
 def getValidChildren(allChildren, closedList, openList):
     validChildren = []
     for child in allChildren:
@@ -86,13 +88,16 @@ def getValidChildren(allChildren, closedList, openList):
             validChildren.append(child)
     return validChildren
 
+# this method will compare the present with the goal and returns if it is the goal state
 def compareGoal(currentNode: NodeDepth):
     goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     if (currentNode.state == goal_state):
         return True
     else:
         return False
-
+# this method is used when the goal has been found,
+# it will trace back the parent of the goal node up to the root of the tree
+# and will display the path in a file
 def traceParent(solutionNode:NodeDepth,closedList):
     tempNode = solutionNode
 
@@ -141,7 +146,9 @@ def traceParent(solutionNode:NodeDepth,closedList):
                 f.close()
                 break
 
-
+# The iterative deepening algorithm is implemented in this method
+# Creation of the open and closed list
+# Monitors the time to not exceed 60 seconds
 def iterativeDeepeningAlgorithm (initial_state:list):
     startTime = datetime.now()
     currentTime = datetime.now()
@@ -151,6 +158,12 @@ def iterativeDeepeningAlgorithm (initial_state:list):
     depthList = []
     openList.append(NodeDepth([0,0,0,0,0,0,0,0,0],initial_state,1))
 
+    # when there is still content in the openlist
+    # Pop the node and compare with the goal
+    # If it is the goal, call the method traceParent
+    # If not, the children of the node will be created
+    # If the max depth is reached, no children is created
+    # It will iterate through the rest of the tree until every node has been visited at the max depth
     while (openList.count != 0):
         currentTime = datetime.now()
         delta = currentTime - startTime
@@ -179,6 +192,7 @@ def iterativeDeepeningAlgorithm (initial_state:list):
                 if len(openList)==0:
                     openList = depthList
 
+    # Writes all the visited node in a file
     f = open("iterativeDeepeningVisited.txt", "w")
     for currentnode in closedList:
         currentParent = currentnode.parent

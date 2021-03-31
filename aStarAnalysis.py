@@ -13,6 +13,7 @@ import re
 import os
 import time
 
+#randomize the puzzle
 
 def randomGen():
     f = open("20.txt", "w")
@@ -129,21 +130,21 @@ def aStarPrime2(root, goal):
     f.write(str(averageTotal))
     f.write(str("\n"))
 
-
+# write to a file the length
 def outputToFileLength(path, filename):
     f = open(filename, "w")
     f.write(str(path))
     f.write(str("\n"))
     f.close
 
-
+# write to a file for the length holder
 def outputToFileLengthHolder(path, filename):
     f = open(filename, "a")
     f.write(str(path))
     f.write(str("\n"))
     f.close
 
-
+# write the states to the output file
 def outputToFile(path, fileName):
     file = open(fileName, "a")
     for state in path:
@@ -172,7 +173,7 @@ def getInput(filename):
 
     return inputs
 
-
+# method that calls the aStarPrime with the puzzles
 def aStarAnalysis1(inputs, goalState):
     for input in inputs:
         f = open("analysisAStar_h1_p0.txt", "a")
@@ -181,7 +182,7 @@ def aStarAnalysis1(inputs, goalState):
         aStarPrime(input, goalState)
     outputAverageCost("aStarPuzzleCost_h1.txt", "averagePuzzleCost_h1.txt")
 
-
+# method that calls the aStarPrime2 with the puzzles
 def aStarAnalysis2(inputs, goalState):
     for input in inputs:
         f = open("analysisAStar_h2_p0.txt", "a")
@@ -191,7 +192,7 @@ def aStarAnalysis2(inputs, goalState):
 
     outputAverageCost("aStarPuzzleCost_h2.txt", "averagePuzzleCost_h2.txt")
 
-
+#method to get all the 12 possible children of a node
 def getAllChildren(node: Node):
     currentNodeState = node.state
     tempChildState = copy.deepcopy(currentNodeState)
@@ -258,14 +259,14 @@ def getAllChildren(node: Node):
 
     return allChildren
 
-
+# write to a file that outputs the puzzle cost
 def outputSinglePuzzleCost(puzzleCost, fileName):
     f = open(fileName, "a")
     f.write(str(puzzleCost))
     f.write(str("\n"))
     f.close
 
-
+# write to a file that outputs the average cost
 def outputAverageCost(fileNameRead,fileNameWrite):
     with open(fileNameRead) as fh:
         totalcost = sum(map(int, fh.readlines()))

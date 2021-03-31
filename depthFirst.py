@@ -2,7 +2,7 @@ from node import Node
 import copy
 from datetime import datetime
 
-
+#method to get all the 12 possible children of a node
 def getAllChildren(node: Node):
     currentNodeState = node.state
     tempChildState = copy.deepcopy(currentNodeState)
@@ -69,7 +69,8 @@ def getAllChildren(node: Node):
 
     return allChildren
 
-
+# when the 12 children of a node is created by the method getAllChildren,
+# we verify if the children state has already been visited
 def getValidChildren(allChildren, closedList, openList):
     validChildren = []
     for child in allChildren:
@@ -86,7 +87,7 @@ def getValidChildren(allChildren, closedList, openList):
             validChildren.append(child)
     return validChildren
 
-
+# this method will compare the present with the goal and returns if it is the goal state
 def compareGoal(currentNode: Node):
     goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     if (currentNode.state == goal_state):
@@ -94,6 +95,9 @@ def compareGoal(currentNode: Node):
     else:
         return False
 
+# this method is used when the goal has been found,
+# it will trace back the parent of the goal node up to the root of the tree
+# and will display the path in a file
 def traceParent(solutionNode:Node,closedList):
     tempNode = solutionNode
 
@@ -142,7 +146,9 @@ def traceParent(solutionNode:Node,closedList):
                 f.close()
                 break
 
-
+# The depth first algorithm is implemented in this method
+# Creation of the open and closed list
+# Monitors the time to not exceed 60 seconds
 def depthFirstAlgorithm (initial_state:list):
     openList = []
     closedList = []
@@ -150,6 +156,10 @@ def depthFirstAlgorithm (initial_state:list):
     startTime = datetime.now()
     currentTime = datetime.now()
 
+    # when there is still content in the openlist
+    # Pop the node and compare with the goal
+    # If it is the goal, call the method traceParent
+    # If not, the children of the node will be created
     while (openList.count != 0):
         currentTime = datetime.now()
         delta = currentTime - startTime
@@ -171,6 +181,7 @@ def depthFirstAlgorithm (initial_state:list):
             for validChild in reversed(allValidXChildren):
                 openList.append(validChild)
 
+    # Writes all the visited node in a file
     f = open("depthFirstVisited.txt", "w")
     for currentnode in closedList:
         currentParent = currentnode.parent

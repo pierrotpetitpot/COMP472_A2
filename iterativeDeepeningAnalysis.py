@@ -1,4 +1,4 @@
-from node import Node
+from nodeDepth import NodeDepth
 import copy
 from datetime import datetime
 
@@ -8,9 +8,9 @@ import random
 import csv
 
 # calls the depth first algorithm with the 20 random puzzles
-def depthFirstAnalysis1(inputs):
+def iterativeDeepAnalysis1(inputs):
     for input in inputs:
-        depthFirstAlgorithm(input)
+        iterativeDeepeningAlgorithm(input)
 
 # creates 20 random puzzles
 def randomGen():
@@ -42,68 +42,69 @@ def getInput(filename):
     return inputs
 
 #method to get all the 12 possible children of a node
-def getAllChildren(node: Node):
+def getAllChildren(node: NodeDepth):
     currentNodeState = node.state
     tempChildState = copy.deepcopy(currentNodeState)
+    depthCounter = node.depth
     allChildren = []
     # child 0-1
     tempChildState[0], tempChildState[1] = tempChildState[1], tempChildState[0]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState, depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 1-2
     tempChildState[1], tempChildState[2] = tempChildState[2], tempChildState[1]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState, depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 0-3
     tempChildState[0], tempChildState[3] = tempChildState[3], tempChildState[0]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState,depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 1-4
     tempChildState[1], tempChildState[4] = tempChildState[4], tempChildState[1]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState, depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 2-5
     tempChildState[2], tempChildState[5] = tempChildState[5], tempChildState[2]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState, depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 3-4
     tempChildState[3], tempChildState[4] = tempChildState[4], tempChildState[3]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState, depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 4-5
     tempChildState[4], tempChildState[5] = tempChildState[5], tempChildState[4]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState, depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 3-6
     tempChildState[3], tempChildState[6] = tempChildState[6], tempChildState[3]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState, depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 4-7
     tempChildState[4], tempChildState[7] = tempChildState[7], tempChildState[4]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState, depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 5-8
     tempChildState[5], tempChildState[8] = tempChildState[8], tempChildState[5]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState, depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 6-7
     tempChildState[6], tempChildState[7] = tempChildState[7], tempChildState[6]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState,depthCounter+1)
     allChildren.append(newChild)
     tempChildState = copy.deepcopy(currentNodeState)
     # child 7-8
     tempChildState[7], tempChildState[8] = tempChildState[8], tempChildState[7]
-    newChild = Node(currentNodeState, tempChildState)
+    newChild = NodeDepth(currentNodeState, tempChildState, depthCounter+1)
     allChildren.append(newChild)
 
     return allChildren
@@ -127,7 +128,7 @@ def getValidChildren(allChildren, closedList, openList):
     return validChildren
 
 # this method will compare the present with the goal and returns if it is the goal state
-def compareGoal(currentNode: Node):
+def compareGoal(currentNode: NodeDepth):
     goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     if (currentNode.state == goal_state):
         return True
@@ -137,11 +138,11 @@ def compareGoal(currentNode: Node):
 # this method is used when the goal has been found,
 # it will trace back the parent of the goal node up to the root of the tree
 # and will display the path in a file
-def traceParent(solutionNode: Node, closedList):
+def traceParent(solutionNode: NodeDepth, closedList):
     solutionCount = 0
     tempNode = solutionNode
 
-    f = open("depthFirstSolution.txt", "w")
+    f = open("iterativeDeepeningSol.txt", "w")
     currentParent = tempNode.parent
     currentState = tempNode.state
     f.write("\n==============")
@@ -166,7 +167,7 @@ def traceParent(solutionNode: Node, closedList):
         for closedNodes in closedList:
             if (closedNodes.state == tempNode.parent):
                 tempNode = closedNodes
-                f = open("depthFirstSolution.txt", "a")
+                f = open("iterativeDeepeningSol.txt", "a")
                 currentParent = tempNode.parent
                 currentState = tempNode.state
                 f.write("\n==============")
@@ -187,46 +188,56 @@ def traceParent(solutionNode: Node, closedList):
                 f.close()
                 break
     solutionCount += 1
-    outputToFileLength(solutionCount, "depthFirstLengthHolder.txt")
+    outputToFileLength(solutionCount, "iterativeLengthHolder.txt")
 
-# The depth first algorithm is implemented in this method
+# The iterative deepening algorithm is implemented in this method
 # Creation of the open and closed list
 # Monitors the time to not exceed 60 seconds
-def depthFirstAlgorithm(initial_state: list):
+def iterativeDeepeningAlgorithm (initial_state:list):
+    startTime = datetime.now()
+    currentTime = datetime.now()
+
     openList = []
     closedList = []
-    openList.append(Node([0, 0, 0, 0, 0, 0, 0, 0, 0], initial_state))
-    startTime = datetime.now()
+    depthList = []
+    openList.append(NodeDepth([0,0,0,0,0,0,0,0,0],initial_state,1))
 
     while (openList.count != 0):
         currentTime = datetime.now()
         delta = currentTime - startTime
-        if delta.total_seconds() >= 60:
-            f = open("depthFirstSolution.txt", "w")
+        if delta.total_seconds()>= 2:
+            f = open("iterativeDeepeningSol.txt", "w")
             f.write("Time of execution greater than 60 seconds")
             f.close
-            fd = open("depthFirstNosolution.txt", "r")
+            fd = open("iterativeNoSol.txt", "r")
             currentNosol = sum(map(int, fd.readlines()))
             currentNosol += 1
             fd.close
-            fd = open("depthFirstNosolution.txt", "w")
+            fd = open("iterativeNoSol.txt", "w")
             fd.write(str(currentNosol))
             fd.close()
             break
+        maxDepth = 2
         x = openList.pop()
-        if (compareGoal(x)):
+        if compareGoal(x):
             solutionNode = x
-            traceParent(solutionNode, closedList)
+            traceParent(solutionNode,closedList)
             closedList.append(x)
             break
         else:
             allXChildren = getAllChildren(x)
             closedList.append(x)
             allValidXChildren = getValidChildren(allXChildren, closedList, openList)
-            for validChild in reversed(allValidXChildren):
-                openList.append(validChild)
+            if x.depth%(maxDepth-1)!=0:
+                for validChild in reversed(allValidXChildren):
+                    openList.append(validChild)
+            else:
+                for validChild in reversed(allValidXChildren):
+                    depthList.append(validChild)
+                if len(openList)==0:
+                    openList = depthList
 
-    f = open("depthFirstVisited.txt", "w")
+    f = open("iterativeDeepeningVisited.txt", "w")
     for currentnode in closedList:
         currentParent = currentnode.parent
         currentState = currentnode.state
@@ -234,27 +245,27 @@ def depthFirstAlgorithm(initial_state: list):
         f.write("\n\nParent: ")
         pcounter = 0
         for p in currentParent:
-            if (pcounter % 3 == 0):
+            if(pcounter%3 == 0):
                 f.write("\n")
-            f.write(str(p) + " ")
-            pcounter += 1
+            f.write(str(p)+" ")
+            pcounter+=1
         f.write("\n\nState: ")
         scounter = 0
         for s in currentState:
-            if (scounter % 3 == 0):
+            if(scounter%3 == 0):
                 f.write("\n")
-            f.write(str(s) + " ")
-            scounter += 1
+            f.write(str(s)+" ")
+            scounter+=1
     f.close()
 
 # call randomGen and creates and initialize the file for the analysis
 randomGen()
 listOfInputs = getInput("20.txt")
-fd = open("depthFirstNosolution.txt", "w")
+fd = open("iterativeNoSol.txt", "w")
 fd.write("0")
 fd.close()
 
-fd = open("depthFirstLengthHolder.txt", "w")
+fd = open("iterativeLengthHolder.txt", "w")
 fd.write("0")
 fd.close()
 
@@ -262,30 +273,30 @@ print("\n")
 # start the time and call the analysis with the list of 20 puzzles
 # works with the results of the analysis in files and the results are  displayed in the console
 start_timeh2 = time.time()
-depthFirstAnalysis1(listOfInputs)
-print("Total Time depthFirst:", time.time() - start_timeh2, "seconds")
-print("Average Time depthFirst:", (time.time() - start_timeh2) / 20, "seconds")
+iterativeDeepAnalysis1(listOfInputs)
+print("Total Time iterative deepening:", time.time() - start_timeh2, "seconds")
+print("Average Time iterative deepening:", (time.time() - start_timeh2) / 20, "seconds")
 
-fd = open("depthFirstNosolution.txt", "r")
+fd = open("iterativeNoSol.txt", "r")
 currentNosolutions = int(fd.readline())
 fd.close
 
-print("Total No solutions for DepthFirst :", currentNosolutions)
-print("Average No solutions for DepthFirst :", (currentNosolutions / 20)*100, " %")
+print("Total No solutions for iterative deepening :", currentNosolutions)
+print("Average No solutions for iterative deepening :", (currentNosolutions / 20)*100, " %")
 
 
-fd = open("depthFirstLengthHolder.txt","r")
+fd = open("iterativeLengthHolder.txt","r")
 lengthTotal = sum(map(int, fd.readlines()))
 averageTotal = lengthTotal / 20
 fd.close()
 
 
-print("Total length for DepthFirst :", lengthTotal)
-print("Average length for DepthFirst :", averageTotal)
+print("Total length for iterative deepening :", lengthTotal)
+print("Average length for iterative deepening :", averageTotal)
 
-print("Total cost for DepthFirst :", lengthTotal, " Solution Depth")
-print("Average cost for DepthFirst :", averageTotal, " Solution Depth")
+print("Total cost for iterative deepening :", lengthTotal, " Solution Depth")
+print("Average cost for iterative deepening :", averageTotal, " Solution Depth")
 
 fd.close()
-os.remove("depthFirstNosolution.txt")
-os.remove("depthFirstLengthHolder.txt")
+os.remove("iterativeNoSol.txt")
+os.remove("iterativeLengthHolder.txt")

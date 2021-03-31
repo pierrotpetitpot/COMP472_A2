@@ -3,7 +3,7 @@ import copy
 from datetime import datetime
 import random
 
-
+#randomize the puzzle
 def randomGen():
     f = open("20.txt", "w")
     for x in range(20):
@@ -12,7 +12,8 @@ def randomGen():
         f.write("\n")
     f.close
 
-
+# the aStar algorithm is implemented in this method
+# Creates a list of output, list of costs
 def aStar(root, goal):
     listOfOutput = []
     listOfCosts = []
@@ -21,6 +22,10 @@ def aStar(root, goal):
     startTime = datetime.now()
     currentTime = datetime.now()
 
+    # while the current node is not equal to the goal state
+    # gets the children of the current node
+    # then search for the best child
+    # then restart the process with the best child
     while goal != targetNode.state:
         currentTime = datetime.now()
         delta = currentTime - startTime
@@ -47,6 +52,8 @@ def aStar(root, goal):
     aStarOutputSolution(listOfOutput)
     aStarOutputPath(listOfOutput)
 
+# the aStar2 algorithm is implemented in this method
+# Creates a list of output, list of costs
 
 def aStar2(root, goal):
     listOfOutput = []
@@ -55,6 +62,11 @@ def aStar2(root, goal):
     visitedChildrenState = []
     startTime = datetime.now()
     currentTime = datetime.now()
+
+    # while the current node is not equal to the goal state
+    # gets the children of the current node
+    # then search for the best child
+    # then restart the process with the best child
     while goal != targetNode.state:
         currentTime = datetime.now()
         delta = currentTime - startTime
@@ -79,7 +91,7 @@ def aStar2(root, goal):
     aStar2OutputSolution(listOfOutput)
     aStar2OutputPath(listOfOutput)
 
-
+# writes the output solution to file (aStar)
 def aStarOutputSolution(path):
     file = open("defaultHeuristicSolution.txt", "w")
     for state in path:
@@ -94,7 +106,7 @@ def aStarOutputSolution(path):
             scounter += 1
     file.close()
 
-
+# writes the output path to the file (aStar)
 def aStarOutputPath(path):
     file = open("defaultHeuristicPath.txt", "w")
     for state in path:
@@ -109,7 +121,7 @@ def aStarOutputPath(path):
             scounter += 1
     file.close()
 
-
+# writes the output solution to the file (aStar2)
 def aStar2OutputSolution(path):
     file = open("EuclideanHeuristicSolution.txt", "w")
     for state in path:
@@ -124,7 +136,7 @@ def aStar2OutputSolution(path):
             scounter += 1
     file.close()
 
-
+# writes the output path to the file (aStar2)
 def aStar2OutputPath(path):
     file = open("EuclideanHeuristicPath.txt", "w")
     for state in path:
@@ -186,7 +198,7 @@ def hasBeenVisited(child, visitedChildren):
             visited = True
     return visited
 
-
+# method that returns the best child of a node
 def getBestChild(children, listOfCosts):
     if len(listOfCosts) > 0:
         indexLowestCost = listOfCosts.index(min(listOfCosts))
@@ -195,7 +207,7 @@ def getBestChild(children, listOfCosts):
     else:
         return
 
-
+#method to get all the 12 possible children of a node
 def getAllChildren(node: Node):
     currentNodeState = node.state
     tempChildState = copy.deepcopy(currentNodeState)

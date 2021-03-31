@@ -1,4 +1,5 @@
 class Node:
+    # Node used for the depth first algorithm and aStar algorithm
 
     def __init__(self, parent, state):
         self.parent = parent
