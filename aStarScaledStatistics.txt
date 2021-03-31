@@ -1,0 +1,99 @@
+Total length: 23
+Average length: 2.3
+Total noSolution: 0
+Average noSolution: 0.0
+Total cost: 22
+Average cost: 2.2
+Total time(in microseconds): 998
+Average time(in microseconds): 99.8
+
+
+
+Total length: 114
+Average length: 11.4
+Total noSolution: 0
+Average noSolution: 0.0
+Total cost: 920
+Average cost: 92.0
+Total time(in microseconds): 19046
+Average time(in microseconds): 1904.6
+
+
+
+Total length: 271
+Average length: 27.1
+Total noSolution: 0
+Average noSolution: 0.0
+Total cost: 6022
+Average cost: 602.2
+Total time(in microseconds): 205035
+Average time(in microseconds): 20503.5
+
+
+
+Total length: 592
+Average length: 59.2
+Total noSolution: 0
+Average noSolution: 0.0
+Total cost: 37758
+Average cost: 3775.8
+Total time(in microseconds): 1026057
+Average time(in microseconds): 102605.7
+
+
+
+Total length: 1008
+Average length: 100.8
+Total noSolution: 0
+Average noSolution: 0.0
+Total cost: 132386
+Average cost: 13238.6
+Total time(in microseconds): 4253112
+Average time(in microseconds): 425311.2
+
+
+
+Total length: 1722
+Average length: 172.2
+Total noSolution: 0
+Average noSolution: 0.0
+Total cost: 389123
+Average cost: 38912.3
+Total time(in microseconds): 5402737
+Average time(in microseconds): 540273.7
+
+
+
+Total length: 3017
+Average length: 301.7
+Total noSolution: 0
+Average noSolution: 0.0
+Total cost: 1050354
+Average cost: 105035.4
+Total time(in microseconds): 2541289
+Average time(in microseconds): 254128.9
+
+
+
+Total length: 4618
+Average length: 461.8
+Total noSolution: 0
+Average noSolution: 0.0
+Total cost: 2155760
+Average cost: 215576.0
+Total time(in microseconds): 4307412
+Average time(in microseconds): 430741.2
+
+
+
+Total length: 5586
+Average length: 558.6
+Total noSolution: 0
+Average noSolution: 0.0
+Total cost: 4511469
+Average cost: 451146.9
+Total time(in microseconds): 3973081
+Average time(in microseconds): 397308.1
+
+
+
