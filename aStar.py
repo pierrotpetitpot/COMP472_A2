@@ -24,7 +24,7 @@ def aStar(root, goal):
     while goal != targetNode.state:
         currentTime = datetime.now()
         delta = currentTime - startTime
-        if delta.total_seconds() >= 2:
+        if delta.total_seconds() >= 60:
             # change the name of the file
             f = open("defaultHeuristicSolution.txt", "w")
             f.write("Time of execution greater than 60 seconds")
@@ -262,16 +262,8 @@ def getAllChildren(node: Node):
 
     return allChildren
 
-
-goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-aNode = Node(None, [9,8,7,6,5,4,3,2,1])
-
-randomGen()
-
-# my_file = open("20.txt", "r")
-# content_list = my_file.readlines()
-# aNode = Node(None, content_list)
-# aStar(aNode, goal)
-
-aStar(aNode, goal)
-# aStar2(aNode, goal)
+def aStarBoth(state):
+    goal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    aNode = Node(None, state)
+    aStar(aNode, goal)
+    aStar2(aNode, goal)
