@@ -205,7 +205,7 @@ def iterativeDeepeningAlgorithm (initial_state:list):
     while (openList.count != 0):
         currentTime = datetime.now()
         delta = currentTime - startTime
-        if delta.total_seconds()>= 2:
+        if delta.total_seconds()>= 60:
             f = open("iterativeDeepeningSol.txt", "w")
             f.write("Time of execution greater than 60 seconds")
             f.close
